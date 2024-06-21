@@ -40,10 +40,14 @@ public class ProductService
         _context = context;
     }
 
-    public IEnumerable<Product> GetProductsByCategory(string category)
+    public IEnumerable<Product> GetProductsInStockByCategory(string category)
     {
-        return _context.Products.Where(p => p.Category == category).ToList();
+        return _context.Products
+                   .Where(p => p.Category == category)
+                   .Where(p => p.InStock > 0)
+                   .ToList();
     }
+
 }
 ```
 Problèmes :
@@ -91,9 +95,10 @@ public class ProductService
         _productRepository = productRepository;
     }
 
-    public IEnumerable<Product> GetProductsByCategory(string category)
+    public IEnumerable<Product> GetProductsInStockByCategory(string category)
     {
-        return _productRepository.GetProductsByCategory(category);
+        var products = _productRepository.GetProductsByCategory(category);
+        return products.Where(p => p.InStock > 0);
     }
 }
 ```
