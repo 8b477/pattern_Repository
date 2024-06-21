@@ -50,6 +50,17 @@ public class ProductService
 
 }
 ```
+
+```c#
+public class Product
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public string Category { get; set; }
+    public int InStock { get; set; }
+}
+```
+
 Problèmes :
 
 - Couplage fort avec MyDbContext (dépendance directe à la base de données).
