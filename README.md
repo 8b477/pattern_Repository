@@ -114,8 +114,9 @@ public class FakeProductRepository : IProductRepository
     {
         _products = new List<Product>
         {
-            new Product { Id = 1, Name = "Product1", Category = "Category1" },
-            new Product { Id = 2, Name = "Product2", Category = "Category2" }
+            new Product { Id = 1, Name = "Product1", Category = "Category1", InStock = 10 },
+            new Product { Id = 2, Name = "Product2", Category = "Category2", InStock = 0 },
+            new Product { Id = 3, Name = "Product3", Category = "Category1", InStock = 5 }
         };
     }
 
@@ -125,20 +126,26 @@ public class FakeProductRepository : IProductRepository
     }
 }
 
+
 public class ProductServiceTests
 {
     [Fact]
-    public void GetProductsByCategory_ReturnsCorrectProducts()
+    public void GetProductsInStockByCategory_ReturnsCorrectProducts()
     {
+        // Arrange
         var fakeRepository = new FakeProductRepository();
         var productService = new ProductService(fakeRepository);
 
-        var result = productService.GetProductsByCategory("Category1");
+        // Act
+        var result = productService.GetProductsInStockByCategory("Category1");
 
-        Assert.Single(result);
-        Assert.Equal("Product1", result.First().Name);
+        // Assert
+        Assert.Equal(2, result.Count()); // Il doit y avoir 2 produits en stock dans la catégorie "Category1"
+        Assert.Contains(result, p => p.Name == "Product1");
+        Assert.Contains(result, p => p.Name == "Product3");
     }
 }
+
 ```
 
 ### Conclusion
