@@ -1,4 +1,4 @@
-# Découpage :Interfaces, Repositories et Services en C#
+# Découpage : Interfaces | Repositories | Services
 
 ## Pourquoi ce découpage ? 🤔
 
